@@ -96,7 +96,7 @@ namespace BLL.Repository_BLL
         //}
         //#endregion
         
-        //Put
+        //Put 
 
         //Post
         #region AddCourse
@@ -105,6 +105,8 @@ namespace BLL.Repository_BLL
             return _Mapper.Map<CoursesTbl,CoursesDTO>(_coursesDAL.AddCourse(_Mapper.Map<CoursesDTO, CoursesTbl>(coursesDTO)));
         }
         #endregion
-        //Delete
+
+        //Delete 
+
     }
 }
