@@ -17,6 +17,8 @@ public partial class MajorCoursesTbl
 
     public string CourseGrade { get; set; } = null!;
 
+    public short CourseNumberOfWeeklyHours { get; set; }
+
     public virtual CoursesTbl CourseCodeNavigation { get; set; } = null!;
 
     public virtual StaffTbl CourseTeacherCodeNavigation { get; set; } = null!;

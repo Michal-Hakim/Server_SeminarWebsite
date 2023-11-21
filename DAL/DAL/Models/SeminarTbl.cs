@@ -19,8 +19,6 @@ public partial class SeminarTbl
 
     public string? SeminarEmailAddress { get; set; }
 
-    public string? SeminarLogo { get; set; }
-
     public string SeminarManagerPassword { get; set; } = null!;
 
     public bool SeminarStatus { get; set; }

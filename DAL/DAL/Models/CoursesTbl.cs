@@ -9,5 +9,7 @@ public partial class CoursesTbl
 
     public string CourseName { get; set; } = null!;
 
+    public short CourseNumberOfHours { get; set; }
+
     public virtual ICollection<MajorCoursesTbl> MajorCoursesTbls { get; } = new List<MajorCoursesTbl>();
 }

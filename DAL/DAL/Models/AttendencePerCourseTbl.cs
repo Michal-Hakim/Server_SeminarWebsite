@@ -9,9 +9,9 @@ public partial class AttendencePerCourseTbl
 
     public short LessonCode { get; set; }
 
-    public short StudentCode { get; set; }
-
     public bool StudentPresentInLesson { get; set; }
+
+    public short StudentCode { get; set; }
 
     public virtual ExistedLessonsTbl LessonCodeNavigation { get; set; } = null!;
 

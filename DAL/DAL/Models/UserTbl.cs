@@ -7,13 +7,11 @@ public partial class UserTbl
 {
     public string UserId { get; set; } = null!;
 
+    public string UserPassword { get; set; } = null!;
+
     public string UserFirstName { get; set; } = null!;
 
     public string UserLastName { get; set; } = null!;
-
-    public string? UserAddress { get; set; }
-
-    public string? UserLocationCity { get; set; }
 
     public string? UserHomePhoneNumber { get; set; }
 
@@ -23,7 +21,9 @@ public partial class UserTbl
 
     public DateTime? UserEnglishDateOfBirth { get; set; }
 
-    public string UserPassword { get; set; } = null!;
+    public string? UserAddress { get; set; }
+
+    public string? UserLocationCity { get; set; }
 
     public virtual ICollection<StaffTbl> StaffTbls { get; } = new List<StaffTbl>();
 

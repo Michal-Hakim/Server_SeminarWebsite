@@ -77,7 +77,7 @@ namespace DAL.Actions
         {
             _DB.SeminarTbls.Add(seminarTbl);
             _DB.SaveChanges();
-            return _DB.SeminarTbls.Last();
+            return _DB.SeminarTbls.OrderBy(x => x.SeminarCode).Last();
         }
         #endregion
 
