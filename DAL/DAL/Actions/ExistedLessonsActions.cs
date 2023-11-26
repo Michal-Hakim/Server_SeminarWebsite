@@ -33,7 +33,7 @@ namespace DAL.Actions
         public ExistedLessonsTbl GetExistedLessonsByCourseCodeForTheMajor(short courseCodeForTheMajor)
         {
             List<ExistedLessonsTbl> List = _DB.ExistedLessonsTbls.Where(x => x.CourseCodeForTheMajor.Equals(courseCodeForTheMajor)).ToList();
-            return List.Last();
+            return List.OrderBy(x => x.LessonCode).Last();
         }
         #endregion
 
