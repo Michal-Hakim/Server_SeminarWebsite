@@ -102,7 +102,7 @@ namespace DAL.Actions
         {
             _DB.CoursesTbls.Add(coursesTbl);
             _DB.SaveChanges();
-            return _DB.CoursesTbls.Last();
+            return _DB.CoursesTbls.OrderBy(x => x.CourseCode).Last();
         }
         #endregion
 
