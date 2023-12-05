@@ -42,8 +42,8 @@ namespace SeminarWebsite.Controllers
         }
         #endregion
 
-        #region GetFullStaffData
-        [HttpGet("GetFullStaffDataBySeminarCode")]
+        #region GetFullStaffDataBySeminarCode
+        [HttpGet("GetFullStaffDataBySeminarCode/{seminarCode}")]
         public List<FullStaffData> GetFullStaffDataBySeminarCode(short seminarCode)
         {
             List<FullStaffData> fullStaffDatas = new List<FullStaffData>();

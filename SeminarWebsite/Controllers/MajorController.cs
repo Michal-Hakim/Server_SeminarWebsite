@@ -26,6 +26,15 @@ namespace SeminarWebsite.Controllers
         #endregion
 
         //Get
+
+        #region GetAllMajors
+        [HttpGet("GetAllMajors")]
+        public IActionResult GetAllMajors()
+        {
+            return Ok(_majorBLL.GetAllMajors());
+        }
+        #endregion
+
         #region GetTheMajorsWithMoreDetailsBySeminarCode
         [HttpGet("GetTheMajorsWithMoreDetailsBySeminarCode/{seminarCode}")]
         public IActionResult GetTheMajorsWithMoreDetailsBySeminarCode(short seminarCode)
@@ -82,6 +91,13 @@ namespace SeminarWebsite.Controllers
         //Put
 
         //Post
+        #region AddMajor
+        [HttpPost("AddMajor")]
+        public IActionResult AddMajor([FromBody] MajorDTO majorDTO)
+        {
+            return Ok(_majorBLL.AddMajor(majorDTO));
+        }
+        #endregion
 
         //Delete
 

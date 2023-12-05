@@ -38,6 +38,17 @@ namespace BLL.Repository_BLL
         #endregion
 
         //Get
+
+        #region GetAllMajors
+        public List<MajorDTO> GetAllMajors()
+        {
+            List<MajorTbl> majorsTbl = _majorDAL.GetAllMajors();
+            List<MajorDTO> majorDTOs = new List<MajorDTO>();
+            majorsTbl.ForEach(x => majorDTOs.Add(_Mapper.Map<MajorTbl, MajorDTO>(x)));
+            return majorDTOs;
+        }
+        #endregion
+
         #region GetMajorByMajorCode
         public MajorDTO GetMajorByMajorCode(short majorCode)
         {

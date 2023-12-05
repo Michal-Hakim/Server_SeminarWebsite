@@ -70,7 +70,7 @@ namespace DAL.Actions
         {
             _DB.MajorTbls.Add(majorTbl);
             _DB.SaveChanges();
-            return _DB.MajorTbls.Last();
+            return _DB.MajorTbls.OrderBy(x => x.MajorCode).Last();
         }
         #endregion
 

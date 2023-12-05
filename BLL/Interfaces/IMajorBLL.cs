@@ -11,11 +11,11 @@ namespace BLL.Interfaces
     public interface IMajorBLL
     {
         //Get
+        public List<MajorDTO> GetAllMajors();
         public MajorDTO GetMajorByMajorCode(short majorCode);
         public MajorDTO GetMajorBySeminarCodeAndMajorCode(short seminarCode, short majorCode);
         public List<MajorDTO> GetMajorsBySeminarAndTeacherCode(short seminarCode, short staffCode);
         public List<MajorDTO> GetMajorBySeminarCode(short seminarCode);
-        //public List<MajorDTO> GetAllMajors();
         //public List<MajorDTO> GetMajorBySeminarCodeAndMajorCodeCoordinator(short seminarCode, short majorCodeCoordinator);
         //public List<MajorDTO> GetMajorBySeminarCodeAndMajorName(short seminarCode, string majorName);
 
