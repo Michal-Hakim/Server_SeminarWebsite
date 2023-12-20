@@ -16,6 +16,7 @@ namespace DAL.Interfaces
         public List<MajorTbl> GetMajorBySeminarCodeAndMajorName(short seminarCode, string majorName);
         public List<MajorTbl> GetMajorBySeminarCodeAndMajorCodeCoordinator(short seminarCode, short majorCodeCoordinator);
         public List<MajorTbl> GetMajorBySeminarCode(short seminarCode);
+        public MajorTbl GetMajorByMajorName(string majorName);
 
         //Put
         //public List<MajorTbl> UpdateMajorByMajorCode(short majorCode);

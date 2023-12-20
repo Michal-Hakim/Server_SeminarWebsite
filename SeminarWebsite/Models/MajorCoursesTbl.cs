@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DAL.Models;
+namespace SeminarWebsite.Models;
 
 public partial class MajorCoursesTbl
 {
@@ -16,8 +16,6 @@ public partial class MajorCoursesTbl
     public DateTime CourseStartYear { get; set; }
 
     public string CourseGrade { get; set; } = null!;
-
-    //public short CourseNumberOfWeeklyHours { get; set; }
 
     public virtual CoursesTbl CourseCodeNavigation { get; set; } = null!;
 

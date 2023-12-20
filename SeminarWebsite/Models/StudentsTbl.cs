@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DAL.Models;
+namespace SeminarWebsite.Models;
 
 public partial class StudentsTbl
 {
@@ -12,10 +12,6 @@ public partial class StudentsTbl
     public string? StudentFatherCellPhoneNumber { get; set; }
 
     public string? StudentMotherCellPhoneNumber { get; set; }
-
-    public short SeminarCode { get; set; }
-
-    public DateTime StudentYearOfStartingSchool { get; set; }
 
     public string StudentGrade { get; set; } = null!;
 
@@ -31,7 +27,9 @@ public partial class StudentsTbl
 
     public short? StudentTeachingGuideCode { get; set; }
 
-    //public string? StudentMessageBox { get; set; }
+    public DateTime StudentYearOfStartingSchool { get; set; }
+
+    public short SeminarCode { get; set; }
 
     public virtual ICollection<AttendencePerCourseTbl> AttendencePerCourseTbls { get; } = new List<AttendencePerCourseTbl>();
 

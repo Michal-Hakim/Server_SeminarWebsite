@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace DAL.Models;
+namespace SeminarWebsite.Models;
 
 public partial class SeminarWebsiteContext : DbContext
 {
@@ -27,8 +27,6 @@ public partial class SeminarWebsiteContext : DbContext
 
     public virtual DbSet<MarkPerCourseTbl> MarkPerCourseTbls { get; set; }
 
-    public virtual DbSet<MessagePerMajorTbl> MessagePerMajorTbls { get; set; }
-
     public virtual DbSet<SeminarTbl> SeminarTbls { get; set; }
 
     public virtual DbSet<StaffTbl> StaffTbls { get; set; }
@@ -45,7 +43,7 @@ public partial class SeminarWebsiteContext : DbContext
     {
         modelBuilder.Entity<AttendencePerCourseTbl>(entity =>
         {
-            entity.HasKey(e => e.AttendenceCodeForTheCourse).HasName("PK__Attenden__D10AD1083F01BA98");
+            entity.HasKey(e => e.AttendenceCodeForTheCourse).HasName("PK__Attenden__D10AD1089C36DD47");
 
             entity.ToTable("AttendencePerCourse_tbl");
 
@@ -62,18 +60,16 @@ public partial class SeminarWebsiteContext : DbContext
 
         modelBuilder.Entity<CoursesTbl>(entity =>
         {
-            entity.HasKey(e => e.CourseCode).HasName("PK__Courses___FC00E00134BF86A6");
+            entity.HasKey(e => e.CourseCode).HasName("PK__Courses___FC00E001A14C6B3A");
 
             entity.ToTable("Courses_tbl");
 
-            entity.Property(e => e.CourseName)
-                .HasMaxLength(15)
-                .IsUnicode(false);
+            entity.Property(e => e.CourseName).HasMaxLength(15);
         });
 
         modelBuilder.Entity<ExistedLessonsTbl>(entity =>
         {
-            entity.HasKey(e => e.LessonCode).HasName("PK__ExistedL__F447E5044AA69840");
+            entity.HasKey(e => e.LessonCode).HasName("PK__ExistedL__F447E50481EBB2DF");
 
             entity.ToTable("ExistedLessons_tbl");
 
@@ -87,7 +83,7 @@ public partial class SeminarWebsiteContext : DbContext
 
         modelBuilder.Entity<MajorCoursesTbl>(entity =>
         {
-            entity.HasKey(e => e.CourseCodeForTheMajor).HasName("PK__MajorCou__FD811A27C36AAE81");
+            entity.HasKey(e => e.CourseCodeForTheMajor).HasName("PK__MajorCou__FD811A27613880A5");
 
             entity.ToTable("MajorCourses_tbl");
 
@@ -115,13 +111,11 @@ public partial class SeminarWebsiteContext : DbContext
 
         modelBuilder.Entity<MajorTbl>(entity =>
         {
-            entity.HasKey(e => e.MajorCode).HasName("PK__Major_tb__64E58F95E8C1C2B2");
+            entity.HasKey(e => e.MajorCode).HasName("PK__Major_tb__64E58F959F925873");
 
             entity.ToTable("Major_tbl");
 
-            entity.Property(e => e.MajorName)
-                .HasMaxLength(15)
-                .IsUnicode(false);
+            entity.Property(e => e.MajorName).HasMaxLength(15);
 
             entity.HasOne(d => d.MajorCodeCoordinatorNavigation).WithMany(p => p.MajorTbls)
                 .HasForeignKey(d => d.MajorCodeCoordinator)
@@ -136,65 +130,39 @@ public partial class SeminarWebsiteContext : DbContext
 
         modelBuilder.Entity<MarkPerCourseTbl>(entity =>
         {
-            entity.HasKey(e => e.MarkCodeForTheCourse).HasName("PK__MarkPerC__EDE971E661B1D5D8");
+            entity.HasKey(e => e.MarkCodeForTheCourse).HasName("PK__MarkPerC__EDE971E6388FC3C4");
 
             entity.ToTable("MarkPerCourse_tbl");
 
             entity.HasOne(d => d.CourseCodeForTheMajorNavigation).WithMany(p => p.MarkPerCourseTbls)
                 .HasForeignKey(d => d.CourseCodeForTheMajor)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__MarkPerCo__Cours__5165187F");
+                .HasConstraintName("FK__MarkPerCo__Cours__5070F446");
 
             entity.HasOne(d => d.StudentCodeNavigation).WithMany(p => p.MarkPerCourseTbls)
                 .HasForeignKey(d => d.StudentCode)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__MarkPerCo__Stude__5070F446");
-        });
-
-        modelBuilder.Entity<MessagePerMajorTbl>(entity =>
-        {
-            entity.HasKey(e => e.MessageCode).HasName("PK__MessageP__54E8229E1B2CCA97");
-
-            entity.ToTable("MessagePerMajor_tbl");
-
-            entity.Property(e => e.MessageContent).IsUnicode(false);
-            entity.Property(e => e.MessageDate).HasColumnType("date");
-
-            entity.HasOne(d => d.MajorCodeNavigation).WithMany(p => p.MessagePerMajorTbls)
-                .HasForeignKey(d => d.MajorCode)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__MessagePe__Major__5AEE82B9");
-
-            entity.HasOne(d => d.StaffCodeNavigation).WithMany(p => p.MessagePerMajorTbls)
-                .HasForeignKey(d => d.StaffCode)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__MessagePe__Staff__5BE2A6F2");
+                .HasConstraintName("FK__MarkPerCo__Stude__5165187F");
         });
 
         modelBuilder.Entity<SeminarTbl>(entity =>
         {
-            entity.HasKey(e => e.SeminarCode).HasName("PK__Seminar___FB52B63EB5DA458A");
+            entity.HasKey(e => e.SeminarCode).HasName("PK__Seminar___FB52B63E9B2B9CD1");
 
             entity.ToTable("Seminar_tbl");
 
-            entity.Property(e => e.SeminarAddress)
-                .HasMaxLength(50)
-                .IsUnicode(false);
+            entity.Property(e => e.SeminarAddress).HasMaxLength(50);
             entity.Property(e => e.SeminarEmailAddress)
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.SeminarFaxNumber)
                 .HasMaxLength(10)
                 .IsUnicode(false);
-            entity.Property(e => e.SeminarLocationCity)
-                .HasMaxLength(50)
-                .IsUnicode(false);
+            entity.Property(e => e.SeminarLocationCity).HasMaxLength(50);
             entity.Property(e => e.SeminarManagerPassword)
                 .HasMaxLength(20)
                 .IsUnicode(false);
-            entity.Property(e => e.SeminarName)
-                .HasMaxLength(50)
-                .IsUnicode(false);
+            entity.Property(e => e.SeminarName).HasMaxLength(50);
             entity.Property(e => e.SeminarPhoneNumber)
                 .HasMaxLength(10)
                 .IsUnicode(false);
@@ -202,7 +170,7 @@ public partial class SeminarWebsiteContext : DbContext
 
         modelBuilder.Entity<StaffTbl>(entity =>
         {
-            entity.HasKey(e => e.StaffCode).HasName("PK__Staff_tb__D83AD81318A2522A");
+            entity.HasKey(e => e.StaffCode).HasName("PK__Staff_tb__D83AD813F5788E0A");
 
             entity.ToTable("Staff_tbl");
 
@@ -211,9 +179,7 @@ public partial class SeminarWebsiteContext : DbContext
                 .HasMaxLength(9)
                 .IsUnicode(false)
                 .HasColumnName("StaffID");
-            entity.Property(e => e.StaffMemberPosition)
-                .HasMaxLength(50)
-                .IsUnicode(false);
+            entity.Property(e => e.StaffMemberPosition).HasMaxLength(50);
 
             entity.HasOne(d => d.SeminarCodeNavigation).WithMany(p => p.StaffTbls)
                 .HasForeignKey(d => d.SeminarCode)
@@ -228,7 +194,7 @@ public partial class SeminarWebsiteContext : DbContext
 
         modelBuilder.Entity<StudentsTbl>(entity =>
         {
-            entity.HasKey(e => e.StudentCode).HasName("PK__Students__1FC8860557D7BB0E");
+            entity.HasKey(e => e.StudentCode).HasName("PK__Students__1FC8860554CCA555");
 
             entity.ToTable("Students_tbl");
 
@@ -243,7 +209,6 @@ public partial class SeminarWebsiteContext : DbContext
                 .HasMaxLength(9)
                 .IsUnicode(false)
                 .HasColumnName("StudentID");
-            //entity.Property(e => e.StudentMessageBox).IsUnicode(false);
             entity.Property(e => e.StudentMotherCellPhoneNumber)
                 .HasMaxLength(10)
                 .IsUnicode(false);
@@ -252,11 +217,11 @@ public partial class SeminarWebsiteContext : DbContext
             entity.HasOne(d => d.SeminarCodeNavigation).WithMany(p => p.StudentsTbls)
                 .HasForeignKey(d => d.SeminarCode)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Students___Semin__440B1D61");
+                .HasConstraintName("FK__Students___Semin__46E78A0C");
 
             entity.HasOne(d => d.StudentFirstMajorCodeNavigation).WithMany(p => p.StudentsTblStudentFirstMajorCodeNavigations)
                 .HasForeignKey(d => d.StudentFirstMajorCode)
-                .HasConstraintName("FK__Students___Stude__44FF419A");
+                .HasConstraintName("FK__Students___Stude__440B1D61");
 
             entity.HasOne(d => d.Student).WithMany(p => p.StudentsTbls)
                 .HasForeignKey(d => d.StudentId)
@@ -265,16 +230,16 @@ public partial class SeminarWebsiteContext : DbContext
 
             entity.HasOne(d => d.StudentSecondMajorCodeNavigation).WithMany(p => p.StudentsTblStudentSecondMajorCodeNavigations)
                 .HasForeignKey(d => d.StudentSecondMajorCode)
-                .HasConstraintName("FK__Students___Stude__45F365D3");
+                .HasConstraintName("FK__Students___Stude__44FF419A");
 
             entity.HasOne(d => d.StudentTeachingGuideCodeNavigation).WithMany(p => p.StudentsTbls)
                 .HasForeignKey(d => d.StudentTeachingGuideCode)
-                .HasConstraintName("FK__Students___Stude__46E78A0C");
+                .HasConstraintName("FK__Students___Stude__45F365D3");
         });
 
         modelBuilder.Entity<UserTbl>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__User_tbl__1788CCACE98EB568");
+            entity.HasKey(e => e.UserId).HasName("PK__User_tbl__1788CCACDDE91986");
 
             entity.ToTable("User_tbl");
 
@@ -282,26 +247,18 @@ public partial class SeminarWebsiteContext : DbContext
                 .HasMaxLength(9)
                 .IsUnicode(false)
                 .HasColumnName("UserID");
-            entity.Property(e => e.UserAddress)
-                .HasMaxLength(50)
-                .IsUnicode(false);
+            entity.Property(e => e.UserAddress).HasMaxLength(50);
             entity.Property(e => e.UserCellPhoneNumber)
                 .HasMaxLength(10)
                 .IsUnicode(false);
             entity.Property(e => e.UserEnglishDateOfBirth).HasColumnType("date");
-            entity.Property(e => e.UserFirstName)
-                .HasMaxLength(10)
-                .IsUnicode(false);
+            entity.Property(e => e.UserFirstName).HasMaxLength(10);
             entity.Property(e => e.UserHebrewDateOfBirth).HasMaxLength(9);
             entity.Property(e => e.UserHomePhoneNumber)
                 .HasMaxLength(10)
                 .IsUnicode(false);
-            entity.Property(e => e.UserLastName)
-                .HasMaxLength(10)
-                .IsUnicode(false);
-            entity.Property(e => e.UserLocationCity)
-                .HasMaxLength(50)
-                .IsUnicode(false);
+            entity.Property(e => e.UserLastName).HasMaxLength(10);
+            entity.Property(e => e.UserLocationCity).HasMaxLength(50);
             entity.Property(e => e.UserPassword)
                 .HasMaxLength(20)
                 .IsUnicode(false);

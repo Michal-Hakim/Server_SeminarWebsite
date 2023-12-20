@@ -16,6 +16,7 @@ namespace BLL.Interfaces
         public MajorDTO GetMajorBySeminarCodeAndMajorCode(short seminarCode, short majorCode);
         public List<MajorDTO> GetMajorsBySeminarAndTeacherCode(short seminarCode, short staffCode);
         public List<MajorDTO> GetMajorBySeminarCode(short seminarCode);
+        public MajorDTO GetMajorByMajorName(string majorName);
         //public List<MajorDTO> GetMajorBySeminarCodeAndMajorCodeCoordinator(short seminarCode, short majorCodeCoordinator);
         //public List<MajorDTO> GetMajorBySeminarCodeAndMajorName(short seminarCode, string majorName);
 
