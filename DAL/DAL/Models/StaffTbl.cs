@@ -21,8 +21,6 @@ public partial class StaffTbl
 
     public virtual ICollection<MajorTbl> MajorTbls { get; } = new List<MajorTbl>();
 
-    public virtual ICollection<MessagePerMajorTbl> MessagePerMajorTbls { get; } = new List<MessagePerMajorTbl>();
-
     public virtual SeminarTbl SeminarCodeNavigation { get; set; } = null!;
 
     public virtual UserTbl Staff { get; set; } = null!;

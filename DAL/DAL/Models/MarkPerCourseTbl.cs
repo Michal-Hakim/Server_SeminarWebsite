@@ -7,9 +7,9 @@ public partial class MarkPerCourseTbl
 {
     public short MarkCodeForTheCourse { get; set; }
 
-    public short StudentCode { get; set; }
-
     public short CourseCodeForTheMajor { get; set; }
+
+    public short StudentCode { get; set; }
 
     public double? MarkFirstHalf { get; set; }
 

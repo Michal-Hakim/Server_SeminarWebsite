@@ -13,10 +13,6 @@ public partial class StudentsTbl
 
     public string? StudentMotherCellPhoneNumber { get; set; }
 
-    public short SeminarCode { get; set; }
-
-    public DateTime StudentYearOfStartingSchool { get; set; }
-
     public string StudentGrade { get; set; } = null!;
 
     public short? StudentClassNumber { get; set; }
@@ -31,7 +27,9 @@ public partial class StudentsTbl
 
     public short? StudentTeachingGuideCode { get; set; }
 
-    public string? StudentMessageBox { get; set; }
+    public DateTime StudentYearOfStartingSchool { get; set; }
+
+    public short SeminarCode { get; set; }
 
     public virtual ICollection<AttendencePerCourseTbl> AttendencePerCourseTbls { get; } = new List<AttendencePerCourseTbl>();
 

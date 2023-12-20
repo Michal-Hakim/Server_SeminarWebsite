@@ -27,8 +27,6 @@ public partial class SeminarWebsiteContext : DbContext
 
     public virtual DbSet<MarkPerCourseTbl> MarkPerCourseTbls { get; set; }
 
-    public virtual DbSet<MessagePerMajorTbl> MessagePerMajorTbls { get; set; }
-
     public virtual DbSet<SeminarTbl> SeminarTbls { get; set; }
 
     public virtual DbSet<StaffTbl> StaffTbls { get; set; }
@@ -39,30 +37,30 @@ public partial class SeminarWebsiteContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=LAPTOP-JQVA1GIN;Database=SeminarWebsite;Trusted_Connection=True;TrustServerCertificate=True;");
+        => optionsBuilder.UseSqlServer("Server=DESKTOP-2E511JM\\SQLEXPRESS;Database=SeminarWebsite;Trusted_Connection=True;TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<AttendencePerCourseTbl>(entity =>
         {
-            entity.HasKey(e => e.AttendenceCodeForTheCourse).HasName("PK__Attenden__D10AD1083F01BA98");
+            entity.HasKey(e => e.AttendenceCodeForTheCourse).HasName("PK__Attenden__D10AD108FF408C32");
 
             entity.ToTable("AttendencePerCourse_tbl");
 
             entity.HasOne(d => d.LessonCodeNavigation).WithMany(p => p.AttendencePerCourseTbls)
                 .HasForeignKey(d => d.LessonCode)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Attendenc__Lesso__571DF1D5");
+                .HasConstraintName("FK__Attendenc__Lesso__440B1D61");
 
             entity.HasOne(d => d.StudentCodeNavigation).WithMany(p => p.AttendencePerCourseTbls)
                 .HasForeignKey(d => d.StudentCode)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Attendenc__Stude__5812160E");
+                .HasConstraintName("FK__Attendenc__Stude__44FF419A");
         });
 
         modelBuilder.Entity<CoursesTbl>(entity =>
         {
-            entity.HasKey(e => e.CourseCode).HasName("PK__Courses___FC00E00134BF86A6");
+            entity.HasKey(e => e.CourseCode).HasName("PK__Courses___FC00E00139EB4DE8");
 
             entity.ToTable("Courses_tbl");
 
@@ -73,7 +71,7 @@ public partial class SeminarWebsiteContext : DbContext
 
         modelBuilder.Entity<ExistedLessonsTbl>(entity =>
         {
-            entity.HasKey(e => e.LessonCode).HasName("PK__ExistedL__F447E5044AA69840");
+            entity.HasKey(e => e.LessonCode).HasName("PK__ExistedL__F447E504D062FC15");
 
             entity.ToTable("ExistedLessons_tbl");
 
@@ -82,12 +80,12 @@ public partial class SeminarWebsiteContext : DbContext
             entity.HasOne(d => d.CourseCodeForTheMajorNavigation).WithMany(p => p.ExistedLessonsTbls)
                 .HasForeignKey(d => d.CourseCodeForTheMajor)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__ExistedLe__Cours__5441852A");
+                .HasConstraintName("FK__ExistedLe__Cours__412EB0B6");
         });
 
         modelBuilder.Entity<MajorCoursesTbl>(entity =>
         {
-            entity.HasKey(e => e.CourseCodeForTheMajor).HasName("PK__MajorCou__FD811A27C36AAE81");
+            entity.HasKey(e => e.CourseCodeForTheMajor).HasName("PK__MajorCou__FD811A27E6418264");
 
             entity.ToTable("MajorCourses_tbl");
 
@@ -100,22 +98,22 @@ public partial class SeminarWebsiteContext : DbContext
             entity.HasOne(d => d.CourseCodeNavigation).WithMany(p => p.MajorCoursesTbls)
                 .HasForeignKey(d => d.CourseCode)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__MajorCour__Cours__4CA06362");
+                .HasConstraintName("FK__MajorCour__Cours__398D8EEE");
 
             entity.HasOne(d => d.CourseTeacherCodeNavigation).WithMany(p => p.MajorCoursesTbls)
                 .HasForeignKey(d => d.CourseTeacherCode)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__MajorCour__Cours__4D94879B");
+                .HasConstraintName("FK__MajorCour__Cours__3A81B327");
 
             entity.HasOne(d => d.MajorCodeNavigation).WithMany(p => p.MajorCoursesTbls)
                 .HasForeignKey(d => d.MajorCode)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__MajorCour__Major__4BAC3F29");
+                .HasConstraintName("FK__MajorCour__Major__38996AB5");
         });
 
         modelBuilder.Entity<MajorTbl>(entity =>
         {
-            entity.HasKey(e => e.MajorCode).HasName("PK__Major_tb__64E58F95E8C1C2B2");
+            entity.HasKey(e => e.MajorCode).HasName("PK__Major_tb__64E58F9569762373");
 
             entity.ToTable("Major_tbl");
 
@@ -126,54 +124,34 @@ public partial class SeminarWebsiteContext : DbContext
             entity.HasOne(d => d.MajorCodeCoordinatorNavigation).WithMany(p => p.MajorTbls)
                 .HasForeignKey(d => d.MajorCodeCoordinator)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Major_tbl__Major__3F466844");
+                .HasConstraintName("FK__Major_tbl__Major__2C3393D0");
 
             entity.HasOne(d => d.SeminarCodeNavigation).WithMany(p => p.MajorTbls)
                 .HasForeignKey(d => d.SeminarCode)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Major_tbl__Semin__403A8C7D");
+                .HasConstraintName("FK__Major_tbl__Semin__2D27B809");
         });
 
         modelBuilder.Entity<MarkPerCourseTbl>(entity =>
         {
-            entity.HasKey(e => e.MarkCodeForTheCourse).HasName("PK__MarkPerC__EDE971E661B1D5D8");
+            entity.HasKey(e => e.MarkCodeForTheCourse).HasName("PK__MarkPerC__EDE971E67377EE0B");
 
             entity.ToTable("MarkPerCourse_tbl");
 
             entity.HasOne(d => d.CourseCodeForTheMajorNavigation).WithMany(p => p.MarkPerCourseTbls)
                 .HasForeignKey(d => d.CourseCodeForTheMajor)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__MarkPerCo__Cours__5165187F");
+                .HasConstraintName("FK__MarkPerCo__Cours__3D5E1FD2");
 
             entity.HasOne(d => d.StudentCodeNavigation).WithMany(p => p.MarkPerCourseTbls)
                 .HasForeignKey(d => d.StudentCode)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__MarkPerCo__Stude__5070F446");
-        });
-
-        modelBuilder.Entity<MessagePerMajorTbl>(entity =>
-        {
-            entity.HasKey(e => e.MessageCode).HasName("PK__MessageP__54E8229E1B2CCA97");
-
-            entity.ToTable("MessagePerMajor_tbl");
-
-            entity.Property(e => e.MessageContent).IsUnicode(false);
-            entity.Property(e => e.MessageDate).HasColumnType("date");
-
-            entity.HasOne(d => d.MajorCodeNavigation).WithMany(p => p.MessagePerMajorTbls)
-                .HasForeignKey(d => d.MajorCode)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__MessagePe__Major__5AEE82B9");
-
-            entity.HasOne(d => d.StaffCodeNavigation).WithMany(p => p.MessagePerMajorTbls)
-                .HasForeignKey(d => d.StaffCode)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__MessagePe__Staff__5BE2A6F2");
+                .HasConstraintName("FK__MarkPerCo__Stude__3E52440B");
         });
 
         modelBuilder.Entity<SeminarTbl>(entity =>
         {
-            entity.HasKey(e => e.SeminarCode).HasName("PK__Seminar___FB52B63EB5DA458A");
+            entity.HasKey(e => e.SeminarCode).HasName("PK__Seminar___FB52B63E8B088AE6");
 
             entity.ToTable("Seminar_tbl");
 
@@ -189,6 +167,7 @@ public partial class SeminarWebsiteContext : DbContext
             entity.Property(e => e.SeminarLocationCity)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+            entity.Property(e => e.SeminarLogo).IsUnicode(false);
             entity.Property(e => e.SeminarManagerPassword)
                 .HasMaxLength(20)
                 .IsUnicode(false);
@@ -202,7 +181,7 @@ public partial class SeminarWebsiteContext : DbContext
 
         modelBuilder.Entity<StaffTbl>(entity =>
         {
-            entity.HasKey(e => e.StaffCode).HasName("PK__Staff_tb__D83AD81318A2522A");
+            entity.HasKey(e => e.StaffCode).HasName("PK__Staff_tb__D83AD81315FC566B");
 
             entity.ToTable("Staff_tbl");
 
@@ -218,17 +197,17 @@ public partial class SeminarWebsiteContext : DbContext
             entity.HasOne(d => d.SeminarCodeNavigation).WithMany(p => p.StaffTbls)
                 .HasForeignKey(d => d.SeminarCode)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Staff_tbl__Semin__3C69FB99");
+                .HasConstraintName("FK__Staff_tbl__Semin__29572725");
 
             entity.HasOne(d => d.Staff).WithMany(p => p.StaffTbls)
                 .HasForeignKey(d => d.StaffId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Staff_tbl__Staff__3B75D760");
+                .HasConstraintName("FK__Staff_tbl__Staff__286302EC");
         });
 
         modelBuilder.Entity<StudentsTbl>(entity =>
         {
-            entity.HasKey(e => e.StudentCode).HasName("PK__Students__1FC8860557D7BB0E");
+            entity.HasKey(e => e.StudentCode).HasName("PK__Students__1FC8860526FB88D3");
 
             entity.ToTable("Students_tbl");
 
@@ -243,7 +222,6 @@ public partial class SeminarWebsiteContext : DbContext
                 .HasMaxLength(9)
                 .IsUnicode(false)
                 .HasColumnName("StudentID");
-            entity.Property(e => e.StudentMessageBox).IsUnicode(false);
             entity.Property(e => e.StudentMotherCellPhoneNumber)
                 .HasMaxLength(10)
                 .IsUnicode(false);
@@ -252,29 +230,29 @@ public partial class SeminarWebsiteContext : DbContext
             entity.HasOne(d => d.SeminarCodeNavigation).WithMany(p => p.StudentsTbls)
                 .HasForeignKey(d => d.SeminarCode)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Students___Semin__440B1D61");
+                .HasConstraintName("FK__Students___Semin__33D4B598");
 
             entity.HasOne(d => d.StudentFirstMajorCodeNavigation).WithMany(p => p.StudentsTblStudentFirstMajorCodeNavigations)
                 .HasForeignKey(d => d.StudentFirstMajorCode)
-                .HasConstraintName("FK__Students___Stude__44FF419A");
+                .HasConstraintName("FK__Students___Stude__30F848ED");
 
             entity.HasOne(d => d.Student).WithMany(p => p.StudentsTbls)
                 .HasForeignKey(d => d.StudentId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Students___Stude__4316F928");
+                .HasConstraintName("FK__Students___Stude__300424B4");
 
             entity.HasOne(d => d.StudentSecondMajorCodeNavigation).WithMany(p => p.StudentsTblStudentSecondMajorCodeNavigations)
                 .HasForeignKey(d => d.StudentSecondMajorCode)
-                .HasConstraintName("FK__Students___Stude__45F365D3");
+                .HasConstraintName("FK__Students___Stude__31EC6D26");
 
             entity.HasOne(d => d.StudentTeachingGuideCodeNavigation).WithMany(p => p.StudentsTbls)
                 .HasForeignKey(d => d.StudentTeachingGuideCode)
-                .HasConstraintName("FK__Students___Stude__46E78A0C");
+                .HasConstraintName("FK__Students___Stude__32E0915F");
         });
 
         modelBuilder.Entity<UserTbl>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__User_tbl__1788CCACE98EB568");
+            entity.HasKey(e => e.UserId).HasName("PK__User_tbl__1788CCAC214AF41B");
 
             entity.ToTable("User_tbl");
 
@@ -292,7 +270,9 @@ public partial class SeminarWebsiteContext : DbContext
             entity.Property(e => e.UserFirstName)
                 .HasMaxLength(10)
                 .IsUnicode(false);
-            entity.Property(e => e.UserHebrewDateOfBirth).HasMaxLength(9);
+            entity.Property(e => e.UserHebrewDateOfBirth)
+                .HasMaxLength(9)
+                .IsUnicode(false);
             entity.Property(e => e.UserHomePhoneNumber)
                 .HasMaxLength(10)
                 .IsUnicode(false);
