@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DAL.Models;
+namespace SeminarWebsite.Models;
 
 public partial class CoursesTbl
 {
     public short CourseCode { get; set; }
 
     public string CourseName { get; set; } = null!;
-
-    public short CourseNumberOfHours { get; set; }
 
     public virtual ICollection<MajorCoursesTbl> MajorCoursesTbls { get; } = new List<MajorCoursesTbl>();
 }

@@ -62,6 +62,13 @@ namespace DAL.Actions
         }
         #endregion
 
+        #region GetMajorByMajorName
+        public MajorTbl GetMajorByMajorName(string majorName)
+        {
+            return _DB.MajorTbls.FirstOrDefault(x => x.MajorName.Equals(majorName));
+        }
+        #endregion
+
         //Put
 
         //Post

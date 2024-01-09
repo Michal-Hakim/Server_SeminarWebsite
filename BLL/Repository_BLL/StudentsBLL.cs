@@ -79,13 +79,23 @@ namespace BLL.Repository_BLL
             return studentsDTO;
         }
         #endregion
-        
+
         #region GetAllStudentsByStudentMajorCodeAndStudentGradeAndSeminarCode
         public List<StudentsDTO> GetAllStudentsByStudentMajorCodeAndStudentGradeAndSeminarCode(short studentMajorCode, short studentGrade, short seminarCode)
         {
             List<StudentsDTO> studentsDTO = new List<StudentsDTO>();
             _studentsDAL.GetAllStudentsByStudentMajorCodeAndStudentGradeAndSeminarCode(studentMajorCode, studentGrade, seminarCode).ForEach(
                 x => studentsDTO.Add(_Mapper.Map<StudentsTbl, StudentsDTO>(x)));
+            return studentsDTO;
+        }
+        #endregion
+
+        #region GetAllStudentsByStudentGradeAndSeminarCode
+        public List<StudentsDTO> GetAllStudentsByStudentGradeAndSeminarCode(string studentGrade, short seminarCode)
+        {
+            List<StudentsTbl> studentsTbl = _studentsDAL.GetAllStudentsByStudentGradeAndSeminarCode(studentGrade, seminarCode);
+            List<StudentsDTO> studentsDTO = new List<StudentsDTO>();
+            studentsTbl.ForEach(x => studentsDTO.Add(_Mapper.Map<StudentsTbl, StudentsDTO>(x)));
             return studentsDTO;
         }
         #endregion

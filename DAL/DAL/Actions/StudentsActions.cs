@@ -53,14 +53,14 @@ namespace DAL.Actions
         #endregion
 
         #region GetAllStudentsByStudentGradeAndSeminarCode
-        public List<StudentsTbl> GetAllStudentsByStudentGradeAndSeminarCode(short studentGrade, short seminarCode)
+        public List<StudentsTbl> GetAllStudentsByStudentGradeAndSeminarCode(string studentGrade, short seminarCode)
         {
             return GetStudentsBySeminarCode(seminarCode).Where(x => x.StudentGrade.Equals(studentGrade)).ToList();
         }
         #endregion
 
         #region GetAllStudentsByStudentGradeAndStudentClassNumberAndSeminarCode
-        public List<StudentsTbl> GetAllStudentsByStudentGradeAndStudentClassNumberAndSeminarCode(short studentGrade, short studentClassNumber, short seminarCode)
+        public List<StudentsTbl> GetAllStudentsByStudentGradeAndStudentClassNumberAndSeminarCode(string studentGrade, short studentClassNumber, short seminarCode)
         {
             return GetAllStudentsByStudentGradeAndSeminarCode(studentGrade, seminarCode).Where(x => x.StudentClassNumber.Equals(studentClassNumber)).ToList();
         }

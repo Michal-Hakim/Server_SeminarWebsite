@@ -15,12 +15,12 @@ namespace BLL.Interfaces
         public List<StudentsDTO> GetAllStudents();
         public List<StudentsDTO> GetStudentsBySeminarCode(short seminarCode);
         public List<StudentsDTO> GetAllStudentsByStudentMajorCodeAndStudentGradeAndSeminarCode(short studentMajorCode, short studentGrade, short seminarCode);
-        public List<StudentsDTO> GetAllStudentsByStudentMajorCode(short studentMajorCode);
+        public List<StudentsDTO> GetAllStudentsByStudentMajorCode(short studentMajorCode);        
+        public List<StudentsDTO> GetAllStudentsByStudentGradeAndSeminarCode(string studentGrade, short seminarCode);
         //public StudentsDTO GetStudentByStudentCode(short studentCode);
         //public List<StudentsDTO> GetAllStudentsByStudentLearnedFirstAidAndSeminarCode(bool studentLearnedFirstAid, short seminarCode);
         //public List<StudentsDTO> GetAllStudentsByStudentIsStudyingTeachingAndSeminarCode(bool studentIsStudyingTeaching, short seminarCode);
         //public List<StudentsDTO> GetAllStudentsByStudentTeachingGuideCodeAndSeminarCode(short StudentTeachingGuideCode, short seminarCode);
-        //public List<StudentsDTO> GetAllStudentsByStudentGradeAndSeminarCode(short studentGrade, short seminarCode);
         //public List<StudentsDTO> GetAllStudentsByStudentGradeAndStudentClassNumberAndSeminarCode(short studentGrade, short studentClassNumber, short seminarCode);
 
         //Put

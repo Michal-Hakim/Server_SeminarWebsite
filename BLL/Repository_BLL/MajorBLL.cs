@@ -88,6 +88,13 @@ namespace BLL.Repository_BLL
         }
         #endregion
 
+        #region GetMajorByMajorName
+        public MajorDTO GetMajorByMajorName(string majorName)
+        {
+            return _Mapper.Map<MajorTbl, MajorDTO>(_majorDAL.GetMajorByMajorName(majorName));
+        }
+        #endregion
+
         //Put
 
         //Post

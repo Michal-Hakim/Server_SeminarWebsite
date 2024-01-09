@@ -88,6 +88,14 @@ namespace SeminarWebsite.Controllers
         }
         #endregion
 
+        #region GetMajorByMajorName
+        [HttpGet("GetMajorByMajorName/{majorName}")]
+        public IActionResult GetMajorByMajorName(string majorName)
+        {
+            return Ok(_majorBLL.GetMajorByMajorName(majorName));
+        }
+        #endregion
+
         //Put
 
         //Post
