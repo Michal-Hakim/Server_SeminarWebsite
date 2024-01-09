@@ -14,8 +14,8 @@ namespace DAL.Interfaces
         public StudentsTbl GetStudentByStudentID(string studentID);
         public List<StudentsTbl> GetAllStudents();
         public List<StudentsTbl> GetStudentsBySeminarCode(short seminarCode);
-        public List<StudentsTbl> GetAllStudentsByStudentGradeAndSeminarCode(short studentGrade, short seminarCode);
-        public List<StudentsTbl> GetAllStudentsByStudentGradeAndStudentClassNumberAndSeminarCode(short studentGrade, short studentClassNumber, short seminarCode);
+        public List<StudentsTbl> GetAllStudentsByStudentGradeAndSeminarCode(string studentGrade, short seminarCode);
+        public List<StudentsTbl> GetAllStudentsByStudentGradeAndStudentClassNumberAndSeminarCode(string studentGrade, short studentClassNumber, short seminarCode);
         public List<StudentsTbl> GetAllStudentsByStudentMajorCodeAndStudentGradeAndSeminarCode(short studentMajorCode, short studentGrade, short seminarCode);
         public List<StudentsTbl> GetAllStudentsByStudentMajorCode(short studentMajorCode);
         public List<StudentsTbl> GetAllStudentsByStudentLearnedFirstAidAndSeminarCode(bool studentLearnedFirstAid, short seminarCode);

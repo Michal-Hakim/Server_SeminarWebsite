@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using SeminarWebsite.Classes;
 using SeminarWebsite.ExcelFiles;
 using System.ComponentModel;
+using System.Diagnostics;
 
 namespace SeminarWebsite.Controllers
 {
@@ -105,6 +106,25 @@ namespace SeminarWebsite.Controllers
         public IActionResult GetStudentByStudentID(string studentId)
         {
             return Ok(_studentsBLL.GetStudentByStudentID(studentId));
+        }
+        #endregion
+
+        #region GetAllStudentsByStudentGradeAndSeminarCode
+        [HttpGet("GetAllStudentsByStudentGradeAndSeminarCode/{studentGrade}/{seminarCode}")]
+        public IActionResult GetAllStudentsByStudentGradeAndSeminarCode(string studentGrade, short seminarCode)
+        {
+            return Ok(_studentsBLL.GetAllStudentsByStudentGradeAndSeminarCode(studentGrade, seminarCode));
+        }
+        #endregion
+
+        #region GetTheMaxNumberOfClassesInSeminarBySeminarCode
+        [HttpGet("GetTheMaxNumberOfClassesInSeminarBySeminarCode/{seminarCode}")]
+        public IActionResult GetTheMaxNumberOfClassesInSeminarBySeminarCode(short seminarCode)
+        {
+            int a = _studentsBLL.GetAllStudentsByStudentGradeAndSeminarCode("A", seminarCode).Max(x => x.StudentClassNumber) ?? 0;
+            int b = _studentsBLL.GetAllStudentsByStudentGradeAndSeminarCode("B", seminarCode).Max(x => x.StudentClassNumber) ?? 0;
+            int c = _studentsBLL.GetAllStudentsByStudentGradeAndSeminarCode("C", seminarCode).Max(x => x.StudentClassNumber) ?? 0;
+            return Ok(Math.Max(a, Math.Max(b, c)));
         }
         #endregion
 
