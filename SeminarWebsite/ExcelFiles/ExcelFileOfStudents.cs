@@ -55,9 +55,12 @@ namespace SeminarWebsite.ExcelFiles
                         var studentFatherCellPhoneNumber = lineParts[8];
                         var studentMotherCellPhoneNumber = lineParts[9];
                         var userCellPhoneNumber = lineParts[10];
-                        var studentYearOfStartingSchool = lineParts[11];
-                        var studentGrade = lineParts[12];
-                        var studentClassNumber = lineParts[13];
+                        var studentGrade = lineParts[11];
+                        var studentClassNumber = lineParts[12];
+                        var studentFirstMajorName = lineParts[13];
+                        var studentSecondMajorName = lineParts[14];
+                        var userPassword = lineParts[15];
+                        var studentYearOfStartingSchool = lineParts[16];
                         #endregion
 
                         //----------------------------------
@@ -68,8 +71,6 @@ namespace SeminarWebsite.ExcelFiles
                             StudentId = userID,
                             StudentFatherCellPhoneNumber = studentFatherCellPhoneNumber,
                             StudentMotherCellPhoneNumber = studentMotherCellPhoneNumber,
-                            SeminarCode = SeminarCode,
-                            StudentYearOfStartingSchool = Convert.ToDateTime(studentYearOfStartingSchool),
                             StudentGrade = studentGrade,
                             StudentClassNumber = Convert.ToInt16(studentClassNumber),
                             StudentFirstMajorCode = null,
@@ -77,6 +78,8 @@ namespace SeminarWebsite.ExcelFiles
                             StudentLearnedFirstAid = false,
                             StudentIsStudyingTeaching = false,
                             StudentTeachingGuideCode = null,
+                            StudentYearOfStartingSchool = Convert.ToDateTime(studentYearOfStartingSchool),
+                            SeminarCode = SeminarCode,
                         };
                         #endregion
 
@@ -95,7 +98,7 @@ namespace SeminarWebsite.ExcelFiles
                             UserHomePhoneNumber = userHomePhoneNumber,
                             UserCellPhoneNumber = userCellPhoneNumber,
                             UserHebrewDateOfBirth = userHebrewDateOfBirth,
-                            UserEnglishDateOfBirth = Convert.ToDateTime(userEnglishDateOfBirth),
+                            UserEnglishDateOfBirth = userEnglishDateOfBirth != "" ? Convert.ToDateTime(userEnglishDateOfBirth) : "",
                             UserAddress = userAddress,
                             UserLocationCity = userLocationCity
                         };
