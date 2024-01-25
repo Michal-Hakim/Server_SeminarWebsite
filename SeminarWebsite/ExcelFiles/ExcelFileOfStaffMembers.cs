@@ -44,15 +44,18 @@ namespace SeminarWebsite.ExcelFiles
                     {
                         var lineParts = line.Split('\t');
                         #region Data from the Excel file - text file
-                        var userID = lineParts[0];
-                        var userFirstName = lineParts[1];
-                        var userLastName = lineParts[2];
-                        var userHomePhoneNumber = lineParts[3];
-                        var userCellPhoneNumber = lineParts[4];
+                        var userFirstName = lineParts[0];
+                        var userLastName = lineParts[1];
+                        var userID = lineParts[2];
+                        var userEnglishDateOfBirth = lineParts[3];
+                        var userHebrewDateOfBirth = lineParts[4];
                         var userAddress = lineParts[5];
                         var userLocationCity = lineParts[6];
-                        var staffMemberPosition = lineParts[7];
-                        var staffEmploymentStartDate = lineParts[8];
+                        var userHomePhoneNumber = lineParts[7];
+                        var userCellPhoneNumber = lineParts[8];
+                        var staffMemberPosition = lineParts[9];
+                        var userPassword = lineParts[10];
+                        var staffEmploymentStartDate = lineParts[11];
                         #endregion
 
                         //----------------------------------
@@ -77,15 +80,15 @@ namespace SeminarWebsite.ExcelFiles
                         UserDTO newUserDTO = new UserDTO()
                         {
                             UserId = userID,
-                            UserPassword = PasswordLottery.PasswordLotteryFunction(),
                             UserFirstName = userFirstName,
                             UserLastName = userLastName,
+                            UserAddress = userAddress,
+                            UserLocationCity = userLocationCity,
                             UserHomePhoneNumber = userHomePhoneNumber,
                             UserCellPhoneNumber = userCellPhoneNumber,
-                            UserHebrewDateOfBirth = null,
-                            UserEnglishDateOfBirth = null,
-                            UserAddress = userAddress,
-                            UserLocationCity = userLocationCity
+                            UserHebrewDateOfBirth = userHebrewDateOfBirth,
+                            UserEnglishDateOfBirth = userEnglishDateOfBirth != "" ? Convert.ToDateTime(userEnglishDateOfBirth) : "",
+                            UserPassword = PasswordLottery.PasswordLotteryFunction(),
                         };
                         #endregion
 

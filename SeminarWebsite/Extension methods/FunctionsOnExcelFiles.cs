@@ -14,7 +14,7 @@ namespace SeminarWebsite.ExcelFiles
 {
     static class FunctionsOnExcelFiles
     {
-        #region UploadAnExcelFile
+        #region UploadAnExcelFileToTheWwwrootFolder
         public static void UploadAnExcelFileToTheWwwrootFolder(this IFormFile fileExcel, string pathDirectory)
         {
             #region Save the uploaded Excel file.
