@@ -1,4 +1,5 @@
 ﻿using BLL.Interfaces;
+using DAL.Interfaces;
 using DAL.Models;
 using DTO.Repository_DTO;
 using Microsoft.AspNetCore.Http;
@@ -22,6 +23,7 @@ namespace SeminarWebsite.Controllers
         private readonly ISeminarBLL _seminarBLL;
         private readonly IMajorBLL _majorBLL;
         private readonly IStaffBLL _staffBLL;
+        private readonly ScheduledTask scheduledTask;
 
         #region C-tor
         public StudentsController(Microsoft.AspNetCore.Hosting.IHostingEnvironment _environment, IConfiguration _configuration, IStudentsBLL studentsBLL, IUserBLL userBLL, ISeminarBLL seminarBLL, IMajorBLL majorBLL, IStaffBLL staffBLL)
@@ -33,6 +35,7 @@ namespace SeminarWebsite.Controllers
             _seminarBLL = seminarBLL;
             _majorBLL = majorBLL;
             _staffBLL = staffBLL;
+            //scheduledTask = new ScheduledTask();
         }
         #endregion
 
@@ -117,6 +120,15 @@ namespace SeminarWebsite.Controllers
         }
         #endregion
 
+        #region GetAllStudentsByStudentGradeAndStudentClassNumberAndSeminarCode
+        [HttpGet("GetAllStudentsByStudentGradeAndStudentClassNumberAndSeminarCode/{studentGrade}/{studentClassNumber}/{seminarCode}")]
+        public List<FullStudentsData> GetAllStudentsByStudentGradeAndStudentClassNumberAndSeminarCode(string studentGrade, short studentClassNumber, short seminarCode)
+        {
+            List<FullStudentsData> students = GetFullStudentsDataBySeminarCode(seminarCode);
+            return students.Where(x => x.StudentGrade.Equals(studentGrade) && x.StudentClassNumber.Equals(studentClassNumber)).ToList();
+        }
+        #endregion
+
         #region GetTheMaxNumberOfClassesInSeminarBySeminarCode
         [HttpGet("GetTheMaxNumberOfClassesInSeminarBySeminarCode/{seminarCode}")]
         public IActionResult GetTheMaxNumberOfClassesInSeminarBySeminarCode(short seminarCode)
@@ -135,6 +147,15 @@ namespace SeminarWebsite.Controllers
         {
             return Ok(_studentsBLL.MatchingStudentToMajors(studentID, StudentFirstMajorCode, StudentSecondMajorCode));
         }
+        #endregion
+
+        #region UpStudentGradeBySeminarCode
+        [HttpPut("UpStudentGradeBySeminarCode/{seminarCode}")]
+        public IActionResult UpStudentGradeBySeminarCode(short seminarCode)
+        {
+            return Ok(_studentsBLL.UpStudentGradeBySeminarCode(seminarCode));
+        }
+
         #endregion
 
         //Post

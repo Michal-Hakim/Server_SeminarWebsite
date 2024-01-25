@@ -100,6 +100,16 @@ namespace BLL.Repository_BLL
         }
         #endregion
 
+        #region GetAllStudentsByStudentGradeAndStudentClassNumberAndSeminarCode
+        public List<StudentsDTO> GetAllStudentsByStudentGradeAndStudentClassNumberAndSeminarCode(string studentGrade, short studentClassNumber, short seminarCode)
+        {
+            List<StudentsTbl> studentsTbl = _studentsDAL.GetAllStudentsByStudentGradeAndStudentClassNumberAndSeminarCode(studentGrade, studentClassNumber, seminarCode);
+            List<StudentsDTO> studentsDTO = new List<StudentsDTO>();
+            studentsTbl.ForEach(x => studentsDTO.Add(_Mapper.Map<StudentsTbl, StudentsDTO>(x)));
+            return studentsDTO;
+        }
+        #endregion
+
         //Put
         #region UpdateStudentByStudentID
         public List<StudentsDTO> UpdateStudentByStudentID(string studentID, StudentsDTO studentDTO)
@@ -113,6 +123,16 @@ namespace BLL.Repository_BLL
         public StudentsDTO MatchingStudentToMajors(string studentID, short StudentFirstMajorCode, short StudentSecondMajorCode)
         {
             return _Mapper.Map<StudentsTbl, StudentsDTO>(_studentsDAL.MatchingStudentToMajors(studentID, StudentFirstMajorCode, StudentSecondMajorCode));
+        }
+
+        #endregion
+
+        #region UpStudentGradeBySeminarCode
+        public List<StudentsDTO> UpStudentGradeBySeminarCode(short seminarCode)
+        {
+            List<StudentsTbl> studentsTbls = _studentsDAL.UpStudentGradeBySeminarCode(seminarCode);
+            List<StudentsDTO> studentsDTOs = studentsTbls.Select(x => _Mapper.Map<StudentsTbl, StudentsDTO>(x)).ToList();
+            return studentsDTOs;
         }
 
         #endregion

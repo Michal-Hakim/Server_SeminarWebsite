@@ -19,7 +19,7 @@ namespace DAL.Actions
             this._DB = DB;
         }
         #endregion
-        
+
         //Get
         #region GetStudentByStudentCode
         public StudentsTbl GetStudentByStudentCode(short studentCode)
@@ -110,13 +110,13 @@ namespace DAL.Actions
             return GetAllStudents();
         }
         #endregion
-        
+
         //Put
         #region UpdateStudentByStudentID
         public List<StudentsTbl> UpdateStudentByStudentID(string studentID, StudentsTbl studentsTbl)
         {
             StudentsTbl anExistingStudent = GetStudentByStudentID(studentID);
-            if(anExistingStudent != null)
+            if (anExistingStudent != null)
             {
                 //anExistingStudent.StudentCode
                 //anExistingStudent.StudentId
@@ -142,11 +142,35 @@ namespace DAL.Actions
         public StudentsTbl MatchingStudentToMajors(string studentID, short StudentFirstMajorCode, short StudentSecondMajorCode)
         {
             StudentsTbl student = GetStudentByStudentID(studentID);
-            student.StudentFirstMajorCode = StudentFirstMajorCode==0?null:StudentFirstMajorCode;
-            student.StudentSecondMajorCode = StudentSecondMajorCode==0?null:StudentSecondMajorCode;
+            student.StudentFirstMajorCode = StudentFirstMajorCode == 0 ? null : StudentFirstMajorCode;
+            student.StudentSecondMajorCode = StudentSecondMajorCode == 0 ? null : StudentSecondMajorCode;
             _DB.SaveChanges();
             return student;
         }
+        #endregion
+
+        #region UpStudentGradeBySeminarCode
+        public List<StudentsTbl> UpStudentGradeBySeminarCode(short seminarCode)
+        {
+            List<StudentsTbl> studentsTbls = GetStudentsBySeminarCode(seminarCode);
+            Dictionary<string, string> gradeMappings = new Dictionary<string, string>
+            {
+                { "A", "B" },
+                { "B", "C" },
+                { "C", "D" },
+                { "D", "D" }
+            };
+            studentsTbls.ForEach(x =>
+            {
+                if (gradeMappings.TryGetValue(x.StudentGrade, out string? nextGrade))
+                {
+                    x.StudentGrade = nextGrade;
+                }
+            });
+            _DB.SaveChanges();
+            return studentsTbls;
+        }
+
         #endregion
 
         //Delete

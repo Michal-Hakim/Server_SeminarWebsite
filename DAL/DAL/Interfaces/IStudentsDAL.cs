@@ -25,6 +25,7 @@ namespace DAL.Interfaces
         //Put
         public List<StudentsTbl> UpdateStudentByStudentID(string studentID, StudentsTbl studentsTbl);
         public StudentsTbl MatchingStudentToMajors(string studentID, short StudentFirstMajorCode, short StudentSecondMajorCode);
+        public List<StudentsTbl> UpStudentGradeBySeminarCode(short seminarCode);
         //public List<StudentsTbl> UpdateStudentByStudentCode(short studentCode);
 
         //Post
