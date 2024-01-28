@@ -27,5 +27,6 @@ namespace DTO.Repository_DTO
         public DateTime? UserEnglishDateOfBirth { get; set; }
 
         public string UserPassword { get; set; } = null!;
+
     }
 }

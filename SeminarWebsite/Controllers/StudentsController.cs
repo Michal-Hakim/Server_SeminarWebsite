@@ -133,7 +133,7 @@ namespace SeminarWebsite.Controllers
         [HttpGet("GetTheMaxNumberOfClassesInSeminarByGradeAndSeminarCode/{grade}/{seminarCode}")]
         public IActionResult GetTheMaxNumberOfClassesInSeminarByGradeAndSeminarCode(string grade, short seminarCode)
         {
-            return _studentsBLL.GetAllStudentsByStudentGradeAndSeminarCode(grade, seminarCode).Max(x => x.StudentClassNumber) ?? 0;
+            return Ok(_studentsBLL.GetAllStudentsByStudentGradeAndSeminarCode(grade, seminarCode).Max(x => x.StudentClassNumber) ?? 0);
         }
         #endregion
 
