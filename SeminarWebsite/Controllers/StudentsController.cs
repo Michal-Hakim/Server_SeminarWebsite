@@ -129,6 +129,14 @@ namespace SeminarWebsite.Controllers
         }
         #endregion
 
+        #region GetTheMaxNumberOfClassesInSeminarByGradeAndSeminarCode
+        [HttpGet("GetTheMaxNumberOfClassesInSeminarByGradeAndSeminarCode/{grade}/{seminarCode}")]
+        public IActionResult GetTheMaxNumberOfClassesInSeminarByGradeAndSeminarCode(string grade, short seminarCode)
+        {
+            return _studentsBLL.GetAllStudentsByStudentGradeAndSeminarCode(grade, seminarCode).Max(x => x.StudentClassNumber) ?? 0;
+        }
+        #endregion
+
         #region GetTheMaxNumberOfClassesInSeminarBySeminarCode
         [HttpGet("GetTheMaxNumberOfClassesInSeminarBySeminarCode/{seminarCode}")]
         public IActionResult GetTheMaxNumberOfClassesInSeminarBySeminarCode(short seminarCode)
