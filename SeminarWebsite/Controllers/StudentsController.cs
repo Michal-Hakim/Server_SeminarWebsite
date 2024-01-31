@@ -155,7 +155,13 @@ namespace SeminarWebsite.Controllers
             List<StudentsDTO> studentsA = _studentsBLL.GetAllStudentsByStudentGradeAndSeminarCode("A", seminarCode);
             List<StudentsDTO> studentsB = _studentsBLL.GetAllStudentsByStudentGradeAndSeminarCode("B", seminarCode);
             List<StudentsDTO> concatenatedList = studentsA.Concat(studentsB).ToList();
-            return Ok(concatenatedList.Select(x => new { x.StudentCode, x.StudentId, studentFullName = _userBLL.GetUserByUserID(x.StudentId).UserFirstName + " " + _userBLL.GetUserByUserID(x.StudentId).UserLastName, x.StudentFirstMajorCode, x.StudentSecondMajorCode }));
+            return Ok(concatenatedList.Select(x => new { x.StudentCode, 
+                                                         x.StudentId, 
+                                                         studentFullName = _userBLL.GetUserByUserID(x.StudentId).UserFirstName + " " + _userBLL.GetUserByUserID(x.StudentId).UserLastName, 
+                                                         x.StudentGrade, 
+                                                         x.StudentClassNumber, 
+                                                         x.StudentFirstMajorCode, 
+                                                         x.StudentSecondMajorCode }));
         }
         #endregion
 
