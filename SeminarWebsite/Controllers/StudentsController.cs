@@ -44,7 +44,7 @@ namespace SeminarWebsite.Controllers
         [HttpGet("GetFullStudentsDataBySeminarCode/{seminarCode}")]
         public List<FullStudentsData> GetFullStudentsDataBySeminarCode(short seminarCode)
         {
-            List<FullStudentsData> fullStudentsDatas= new List<FullStudentsData>();
+            List<FullStudentsData> fullStudentsDatas = new List<FullStudentsData>();
             List<StudentsDTO> listStudents = _studentsBLL.GetStudentsBySeminarCode(seminarCode);
             List<UserDTO> listUsers = _userBLL.GetAllUsers();
             List<string> listUserID = new List<string>();
@@ -53,7 +53,7 @@ namespace SeminarWebsite.Controllers
             listStudents.ForEach(x =>
             {
                 int index = listUserID.IndexOf(x.StudentId);
-                if(index != -1)
+                if (index != -1)
                 {
                     FullStudentsData fullStudent = new FullStudentsData();
                     fullStudent.UserId = listUsers[index].UserId;
@@ -72,14 +72,14 @@ namespace SeminarWebsite.Controllers
                     fullStudent.StudentYearOfStartingSchool = x.StudentYearOfStartingSchool;
                     fullStudent.StudentGrade = x.StudentGrade;
                     fullStudent.StudentClassNumber = x.StudentClassNumber;
-                    fullStudent.StudentFirstMajorName = x.StudentFirstMajorCode != null? _majorBLL.GetMajorByMajorCode((short)x.StudentFirstMajorCode).MajorName : "";
-                    fullStudent.StudentSecondMajorName = x.StudentSecondMajorCode != null? _majorBLL.GetMajorByMajorCode((short)x.StudentSecondMajorCode).MajorName : "";
-                    fullStudent.StudentLearnedFirstAid= x.StudentLearnedFirstAid;
+                    fullStudent.StudentFirstMajorName = x.StudentFirstMajorCode != null ? _majorBLL.GetMajorByMajorCode((short)x.StudentFirstMajorCode).MajorName : "";
+                    fullStudent.StudentSecondMajorName = x.StudentSecondMajorCode != null ? _majorBLL.GetMajorByMajorCode((short)x.StudentSecondMajorCode).MajorName : "";
+                    fullStudent.StudentLearnedFirstAid = x.StudentLearnedFirstAid;
                     fullStudent.StudentIsStudyingTeaching = x.StudentIsStudyingTeaching;
-                    fullStudent.StudentTeachingGuideName = x.StudentTeachingGuideCode != null? _userBLL.GetUserByUserID(_staffBLL.GetStaffMemberByStaffCode((short)x.StudentTeachingGuideCode).StaffId).UserFirstName 
-                                                           + " " 
+                    fullStudent.StudentTeachingGuideName = x.StudentTeachingGuideCode != null ? _userBLL.GetUserByUserID(_staffBLL.GetStaffMemberByStaffCode((short)x.StudentTeachingGuideCode).StaffId).UserFirstName
+                                                           + " "
                                                            + _userBLL.GetUserByUserID(_staffBLL.GetStaffMemberByStaffCode((short)x.StudentTeachingGuideCode).StaffId).UserLastName
-                                                           :"";
+                                                           : "";
                     fullStudentsDatas.Add(fullStudent);
                 }
             });
@@ -148,6 +148,17 @@ namespace SeminarWebsite.Controllers
         }
         #endregion
 
+        #region GetTheDataOfTheStudentsMajorsBySeminarCode
+        [HttpGet("GetTheDataOfTheStudentsMajorsBySeminarCode/{seminarCode}")]
+        public IActionResult GetTheDataOfTheStudentsMajorsBySeminarCode(short seminarCode)
+        {
+            List<StudentsDTO> studentsA = _studentsBLL.GetAllStudentsByStudentGradeAndSeminarCode("A", seminarCode);
+            List<StudentsDTO> studentsB = _studentsBLL.GetAllStudentsByStudentGradeAndSeminarCode("B", seminarCode);
+            List<StudentsDTO> concatenatedList = studentsA.Concat(studentsB).ToList();
+            return Ok(concatenatedList.Select(x => new { x.StudentCode, x.StudentId, studentFullName = _userBLL.GetUserByUserID(x.StudentId).UserFirstName + " " + _userBLL.GetUserByUserID(x.StudentId).UserLastName, x.StudentFirstMajorCode, x.StudentSecondMajorCode }));
+        }
+        #endregion
+
         //Put
         #region MatchingStudentToMajors
         [HttpPut("MatchingStudentToMajors/{studentID}/{StudentFirstMajorCode}/{StudentSecondMajorCode}")]
@@ -189,7 +200,7 @@ namespace SeminarWebsite.Controllers
 
                 ExcelFileOfStudents students = new ExcelFileOfStudents(seminarCode, excelFilePath, textFilePath);
                 students.FillingDataInTheTable();
-                List<StudentsDTO> listStudentsDTO= students.listStudentDTO;
+                List<StudentsDTO> listStudentsDTO = students.listStudentDTO;
                 List<UserDTO> listUserDTO = students.listUserDTO;
 
                 //Going over the Excel file, checking if there is a user whose ID already exists in the data structure.
