@@ -122,18 +122,17 @@ namespace SeminarWebsite.Controllers
 
         #region GetAllStudentsByStudentGradeAndStudentClassNumberAndSeminarCode
         [HttpGet("GetAllStudentsByStudentGradeAndStudentClassNumberAndSeminarCode/{studentGrade}/{studentClassNumber}/{seminarCode}")]
-        public List<FullStudentsData> GetAllStudentsByStudentGradeAndStudentClassNumberAndSeminarCode(string studentGrade, short studentClassNumber, short seminarCode)
+        public IActionResult GetAllStudentsByStudentGradeAndStudentClassNumberAndSeminarCode(string studentGrade, short studentClassNumber, short seminarCode)
         {
-            List<FullStudentsData> students = GetFullStudentsDataBySeminarCode(seminarCode);
-            return students.Where(x => x.StudentGrade.Equals(studentGrade) && x.StudentClassNumber.Equals(studentClassNumber)).ToList();
+            return Ok(_studentsBLL.GetAllStudentsByStudentGradeAndStudentClassNumberAndSeminarCode(studentGrade, studentClassNumber, seminarCode));
         }
         #endregion
 
         #region GetTheMaxNumberOfClassesInSeminarByGradeAndSeminarCode
         [HttpGet("GetTheMaxNumberOfClassesInSeminarByGradeAndSeminarCode/{grade}/{seminarCode}")]
-        public IActionResult GetTheMaxNumberOfClassesInSeminarByGradeAndSeminarCode(string grade, short seminarCode)
+        public int GetTheMaxNumberOfClassesInSeminarByGradeAndSeminarCode(string grade, short seminarCode)
         {
-            return Ok(_studentsBLL.GetAllStudentsByStudentGradeAndSeminarCode(grade, seminarCode).Max(x => x.StudentClassNumber) ?? 0);
+            return _studentsBLL.GetAllStudentsByStudentGradeAndSeminarCode(grade, seminarCode).Max(x => x.StudentClassNumber) ?? 0;
         }
         #endregion
 
@@ -152,16 +151,44 @@ namespace SeminarWebsite.Controllers
         [HttpGet("GetTheDataOfTheStudentsMajorsBySeminarCode/{seminarCode}")]
         public IActionResult GetTheDataOfTheStudentsMajorsBySeminarCode(short seminarCode)
         {
-            List<StudentsDTO> studentsA = _studentsBLL.GetAllStudentsByStudentGradeAndSeminarCode("A", seminarCode);
-            List<StudentsDTO> studentsB = _studentsBLL.GetAllStudentsByStudentGradeAndSeminarCode("B", seminarCode);
-            List<StudentsDTO> concatenatedList = studentsA.Concat(studentsB).ToList();
-            return Ok(concatenatedList.Select(x => new { x.StudentCode, 
-                                                         x.StudentId, 
-                                                         studentFullName = _userBLL.GetUserByUserID(x.StudentId).UserFirstName + " " + _userBLL.GetUserByUserID(x.StudentId).UserLastName, 
-                                                         x.StudentGrade, 
-                                                         x.StudentClassNumber, 
-                                                         x.StudentFirstMajorCode, 
-                                                         x.StudentSecondMajorCode }));
+            Dictionary<char, Dictionary<short, object>> dic = new Dictionary<char, Dictionary<short, object>>
+            {
+                { 'A', new Dictionary<short, object>() },
+                { 'B', new Dictionary<short, object>() }
+            };
+            
+            //Grade: A
+            int maxClassNumber_A = GetTheMaxNumberOfClassesInSeminarByGradeAndSeminarCode("A", seminarCode);
+            for (short index = 1; index <= maxClassNumber_A; index++)
+            {
+                List<StudentsDTO> result = _studentsBLL.GetAllStudentsByStudentGradeAndStudentClassNumberAndSeminarCode("A", index, seminarCode);
+                var resultObject = result.Select(x => new
+                {
+                    x.StudentCode,
+                    x.StudentId,
+                    studentFullName = _userBLL.GetUserByUserID(x.StudentId).UserFirstName + " " + _userBLL.GetUserByUserID(x.StudentId).UserLastName,
+                    x.StudentFirstMajorCode,
+                    x.StudentSecondMajorCode
+                });
+                dic['A'].Add(index, resultObject);
+            }
+
+            //Grade: B
+            int maxClassNumber_B = GetTheMaxNumberOfClassesInSeminarByGradeAndSeminarCode("B", seminarCode);
+            for (short index = 1; index <= maxClassNumber_B; index++)
+            {
+                List<StudentsDTO> result = _studentsBLL.GetAllStudentsByStudentGradeAndStudentClassNumberAndSeminarCode("B", index, seminarCode);
+                var resultObject = result.Select(x => new
+                {
+                    x.StudentCode,
+                    x.StudentId,
+                    studentFullName = _userBLL.GetUserByUserID(x.StudentId).UserFirstName + " " + _userBLL.GetUserByUserID(x.StudentId).UserLastName,
+                    x.StudentFirstMajorCode,
+                    x.StudentSecondMajorCode
+                });
+                dic['B'].Add(index, resultObject);
+            }
+            return Ok(dic);
         }
         #endregion
 
@@ -256,3 +283,4 @@ namespace SeminarWebsite.Controllers
 
     }
 }
+
