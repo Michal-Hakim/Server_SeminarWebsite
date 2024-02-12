@@ -98,7 +98,8 @@ namespace SeminarWebsite.ExcelFiles
                             UserHomePhoneNumber = userHomePhoneNumber,
                             UserCellPhoneNumber = userCellPhoneNumber,
                             UserHebrewDateOfBirth = userHebrewDateOfBirth,
-                            UserEnglishDateOfBirth = userEnglishDateOfBirth != "" ? Convert.ToDateTime(userEnglishDateOfBirth) : null,
+                            UserEnglishDateOfBirth =new DateTime(),
+                            //UserEnglishDateOfBirth = userEnglishDateOfBirth != "" ? Convert.ToDateTime(userEnglishDateOfBirth) : "",
                             UserAddress = userAddress,
                             UserLocationCity = userLocationCity
                         };

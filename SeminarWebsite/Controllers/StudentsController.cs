@@ -44,7 +44,7 @@ namespace SeminarWebsite.Controllers
         [HttpGet("GetFullStudentsDataBySeminarCode/{seminarCode}")]
         public List<FullStudentsData> GetFullStudentsDataBySeminarCode(short seminarCode)
         {
-            List<FullStudentsData> fullStudentsDatas= new List<FullStudentsData>();
+            List<FullStudentsData> fullStudentsDatas = new List<FullStudentsData>();
             List<StudentsDTO> listStudents = _studentsBLL.GetStudentsBySeminarCode(seminarCode);
             List<UserDTO> listUsers = _userBLL.GetAllUsers();
             List<string> listUserID = new List<string>();
@@ -53,7 +53,7 @@ namespace SeminarWebsite.Controllers
             listStudents.ForEach(x =>
             {
                 int index = listUserID.IndexOf(x.StudentId);
-                if(index != -1)
+                if (index != -1)
                 {
                     FullStudentsData fullStudent = new FullStudentsData();
                     fullStudent.UserId = listUsers[index].UserId;
@@ -72,14 +72,14 @@ namespace SeminarWebsite.Controllers
                     fullStudent.StudentYearOfStartingSchool = x.StudentYearOfStartingSchool;
                     fullStudent.StudentGrade = x.StudentGrade;
                     fullStudent.StudentClassNumber = x.StudentClassNumber;
-                    fullStudent.StudentFirstMajorName = x.StudentFirstMajorCode != null? _majorBLL.GetMajorByMajorCode((short)x.StudentFirstMajorCode).MajorName : "";
-                    fullStudent.StudentSecondMajorName = x.StudentSecondMajorCode != null? _majorBLL.GetMajorByMajorCode((short)x.StudentSecondMajorCode).MajorName : "";
-                    fullStudent.StudentLearnedFirstAid= x.StudentLearnedFirstAid;
+                    fullStudent.StudentFirstMajorName = x.StudentFirstMajorCode != null ? _majorBLL.GetMajorByMajorCode((short)x.StudentFirstMajorCode).MajorName : "";
+                    fullStudent.StudentSecondMajorName = x.StudentSecondMajorCode != null ? _majorBLL.GetMajorByMajorCode((short)x.StudentSecondMajorCode).MajorName : "";
+                    fullStudent.StudentLearnedFirstAid = x.StudentLearnedFirstAid;
                     fullStudent.StudentIsStudyingTeaching = x.StudentIsStudyingTeaching;
-                    fullStudent.StudentTeachingGuideName = x.StudentTeachingGuideCode != null? _userBLL.GetUserByUserID(_staffBLL.GetStaffMemberByStaffCode((short)x.StudentTeachingGuideCode).StaffId).UserFirstName 
-                                                           + " " 
+                    fullStudent.StudentTeachingGuideName = x.StudentTeachingGuideCode != null ? _userBLL.GetUserByUserID(_staffBLL.GetStaffMemberByStaffCode((short)x.StudentTeachingGuideCode).StaffId).UserFirstName
+                                                           + " "
                                                            + _userBLL.GetUserByUserID(_staffBLL.GetStaffMemberByStaffCode((short)x.StudentTeachingGuideCode).StaffId).UserLastName
-                                                           :"";
+                                                           : "";
                     fullStudentsDatas.Add(fullStudent);
                 }
             });
@@ -122,10 +122,17 @@ namespace SeminarWebsite.Controllers
 
         #region GetAllStudentsByStudentGradeAndStudentClassNumberAndSeminarCode
         [HttpGet("GetAllStudentsByStudentGradeAndStudentClassNumberAndSeminarCode/{studentGrade}/{studentClassNumber}/{seminarCode}")]
-        public List<FullStudentsData> GetAllStudentsByStudentGradeAndStudentClassNumberAndSeminarCode(string studentGrade, short studentClassNumber, short seminarCode)
+        public IActionResult GetAllStudentsByStudentGradeAndStudentClassNumberAndSeminarCode(string studentGrade, short studentClassNumber, short seminarCode)
         {
-            List<FullStudentsData> students = GetFullStudentsDataBySeminarCode(seminarCode);
-            return students.Where(x => x.StudentGrade.Equals(studentGrade) && x.StudentClassNumber.Equals(studentClassNumber)).ToList();
+            return Ok(_studentsBLL.GetAllStudentsByStudentGradeAndStudentClassNumberAndSeminarCode(studentGrade, studentClassNumber, seminarCode));
+        }
+        #endregion
+
+        #region GetTheMaxNumberOfClassesInSeminarByGradeAndSeminarCode
+        [HttpGet("GetTheMaxNumberOfClassesInSeminarByGradeAndSeminarCode/{grade}/{seminarCode}")]
+        public int GetTheMaxNumberOfClassesInSeminarByGradeAndSeminarCode(string grade, short seminarCode)
+        {
+            return _studentsBLL.GetAllStudentsByStudentGradeAndSeminarCode(grade, seminarCode).Max(x => x.StudentClassNumber) ?? 0;
         }
         #endregion
 
@@ -137,6 +144,51 @@ namespace SeminarWebsite.Controllers
             int b = _studentsBLL.GetAllStudentsByStudentGradeAndSeminarCode("B", seminarCode).Max(x => x.StudentClassNumber) ?? 0;
             int c = _studentsBLL.GetAllStudentsByStudentGradeAndSeminarCode("C", seminarCode).Max(x => x.StudentClassNumber) ?? 0;
             return Ok(Math.Max(a, Math.Max(b, c)));
+        }
+        #endregion
+
+        #region GetTheDataOfTheStudentsMajorsBySeminarCode
+        [HttpGet("GetTheDataOfTheStudentsMajorsBySeminarCode/{seminarCode}")]
+        public IActionResult GetTheDataOfTheStudentsMajorsBySeminarCode(short seminarCode)
+        {
+            Dictionary<char, Dictionary<short, object>> dic = new Dictionary<char, Dictionary<short, object>>
+            {
+                { 'A', new Dictionary<short, object>() },
+                { 'B', new Dictionary<short, object>() }
+            };
+            
+            //Grade: A
+            int maxClassNumber_A = GetTheMaxNumberOfClassesInSeminarByGradeAndSeminarCode("A", seminarCode);
+            for (short index = 1; index <= maxClassNumber_A; index++)
+            {
+                List<StudentsDTO> result = _studentsBLL.GetAllStudentsByStudentGradeAndStudentClassNumberAndSeminarCode("A", index, seminarCode);
+                var resultObject = result.Select(x => new
+                {
+                    x.StudentCode,
+                    x.StudentId,
+                    studentFullName = _userBLL.GetUserByUserID(x.StudentId).UserFirstName + " " + _userBLL.GetUserByUserID(x.StudentId).UserLastName,
+                    x.StudentFirstMajorCode,
+                    x.StudentSecondMajorCode
+                });
+                dic['A'].Add(index, resultObject);
+            }
+
+            //Grade: B
+            int maxClassNumber_B = GetTheMaxNumberOfClassesInSeminarByGradeAndSeminarCode("B", seminarCode);
+            for (short index = 1; index <= maxClassNumber_B; index++)
+            {
+                List<StudentsDTO> result = _studentsBLL.GetAllStudentsByStudentGradeAndStudentClassNumberAndSeminarCode("B", index, seminarCode);
+                var resultObject = result.Select(x => new
+                {
+                    x.StudentCode,
+                    x.StudentId,
+                    studentFullName = _userBLL.GetUserByUserID(x.StudentId).UserFirstName + " " + _userBLL.GetUserByUserID(x.StudentId).UserLastName,
+                    x.StudentFirstMajorCode,
+                    x.StudentSecondMajorCode
+                });
+                dic['B'].Add(index, resultObject);
+            }
+            return Ok(dic);
         }
         #endregion
 
@@ -181,7 +233,7 @@ namespace SeminarWebsite.Controllers
 
                 ExcelFileOfStudents students = new ExcelFileOfStudents(seminarCode, excelFilePath, textFilePath);
                 students.FillingDataInTheTable();
-                List<StudentsDTO> listStudentsDTO= students.listStudentDTO;
+                List<StudentsDTO> listStudentsDTO = students.listStudentDTO;
                 List<UserDTO> listUserDTO = students.listUserDTO;
 
                 //Going over the Excel file, checking if there is a user whose ID already exists in the data structure.
@@ -231,3 +283,4 @@ namespace SeminarWebsite.Controllers
 
     }
 }
+
