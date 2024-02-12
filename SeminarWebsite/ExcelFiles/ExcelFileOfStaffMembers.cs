@@ -87,7 +87,7 @@ namespace SeminarWebsite.ExcelFiles
                             UserHomePhoneNumber = userHomePhoneNumber,
                             UserCellPhoneNumber = userCellPhoneNumber,
                             UserHebrewDateOfBirth = userHebrewDateOfBirth,
-                            UserEnglishDateOfBirth = userEnglishDateOfBirth != "" ? Convert.ToDateTime(userEnglishDateOfBirth) : "",
+                            UserEnglishDateOfBirth = userEnglishDateOfBirth != "" ? Convert.ToDateTime(userEnglishDateOfBirth) : null,
                             UserPassword = PasswordLottery.PasswordLotteryFunction(),
                         };
                         #endregion
